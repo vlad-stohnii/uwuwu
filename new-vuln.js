@@ -1,6 +1,6 @@
-// 1. Cross-Site Scripting (XSS)
-function displayUserInput() {
-    var userInput = document.getElementById('userInput').value;
-    // Directly inserting user input into the DOM without sanitization
-    document.getElementById('output').innerHTML = userInput;
+// 2. Insecure use of eval
+function executeUserScript() {
+    var userScript = document.getElementById('userScript').value;
+    // Using eval to execute user-provided script
+    eval(userScript);
 }
