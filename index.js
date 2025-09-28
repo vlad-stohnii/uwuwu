@@ -4,6 +4,25 @@ const port = 3000;
 
 app.use(express.json());
 
+// Simple in-memory rate limiter
+const rateLimitWindowMs = 60000; // 1 minute window
+const maxRequestsPerWindow = 100;  // max requests per IP per window
+const ipRequestCounts = {};
+setInterval(() => {
+  for (const ip in ipRequestCounts) {
+    delete ipRequestCounts[ip];
+  }
+}, rateLimitWindowMs);
+
+app.use((req, res, next) => {
+  const ip = req.ip;
+  ipRequestCounts[ip] = (ipRequestCounts[ip] || 0) + 1;
+  if (ipRequestCounts[ip] > maxRequestsPerWindow) {
+    return res.status(429).json({ error: "Too many requests" });
+  }
+  next();
+});
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
