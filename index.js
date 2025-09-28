@@ -23,6 +23,9 @@ app.post("/user", (req, res) => {
   res.json(user);
 });
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
+const TIMEOUT = 30000; // 30 seconds
+server.headersTimeout = TIMEOUT;
+server.keepAliveTimeout = TIMEOUT;
