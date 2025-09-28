@@ -13,6 +13,10 @@ app.post("/user", (req, res) => {
   if (!userId) {
     return res.status(400).json({ error: "Missing userid in request body" });
   }
+  // Mitigate DOS by limiting userid size
+  if (typeof userId !== "string" || userId.length > 100) {
+    return res.status(413).json({ error: "userid too long" });
+  }
   // Dummy user data
   const user = {
     userid: userId,
