@@ -29,3 +29,7 @@ const server = app.listen(port, () => {
 const TIMEOUT = 30000; // 30 seconds
 server.headersTimeout = TIMEOUT;
 server.keepAliveTimeout = TIMEOUT;
+server.setTimeout(TIMEOUT);
+server.on('timeout', (socket) => {
+  console.warn(`Socket timed out: ${socket.remoteAddress}`);
+});
