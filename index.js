@@ -9,6 +9,10 @@ app.get("/", (req, res) => {
 });
 
 app.post("/user", (req, res) => {
+  const authToken = req.headers.authorization;
+  if (!authToken || authToken !== process.env.API_TOKEN) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
   const userId = req.body.userid;
   if (!userId) {
     return res.status(400).json({ error: "Missing userid in request body" });
