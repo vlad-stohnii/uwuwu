@@ -36,11 +36,7 @@
       const el = resolveTarget(target);
       if (!el) return console.warn('injectSanitized: target not found', target);
       if (typeof DOMPurify === 'undefined') {
-        // try to load DOMPurify from jsdelivr
-        await loadScriptOnce('https://cdn.jsdelivr.net/npm/dompurify@2.4.0/dist/purify.min.js');
-      }
-      if (typeof DOMPurify === 'undefined') {
-        console.warn('DOMPurify not available; falling back to textContent');
+        console.warn('DOMPurify not available; please include DOMPurify locally; falling back to textContent');
         el.textContent = html;
         return el;
       }
