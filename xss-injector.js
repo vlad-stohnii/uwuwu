@@ -8,7 +8,7 @@
     injectVulnerable(target, html) {
       const el = resolveTarget(target);
       if (!el) return console.warn('injectVulnerable: target not found', target);
-      el.innerHTML = html;
+      el.textContent = html;
       return el;
     },
 
