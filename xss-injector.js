@@ -78,8 +78,8 @@
       el.parentNode && el.parentNode.insertBefore(runner, el.nextSibling);
 
       for (const p of payloads) {
-        runner.innerText = 'injecting (vulnerable): ' + p.slice(0, 60).replace(/\n/g,' ');
-        this.injectVulnerable(el, p);
+        runner.innerText = 'injecting (safe text): ' + p.slice(0, 60).replace(/\n/g,' ');
+        this.injectSafeText(el, p);
         await wait(pause);
         if (showSafe) {
           runner.innerText = 'injecting (safe text): ' + p.slice(0, 60).replace(/\n/g,' ');
