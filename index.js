@@ -23,6 +23,20 @@ app.post("/user", (req, res) => {
   res.json(user);
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-});
+const https = require('https');
+const fs = require('fs');
+
+const useHttps = process.env.SSL_KEY && process.env.SSL_CERT;
+
+if (useHttps) {
+  const key = fs.readFileSync(process.env.SSL_KEY);
+  const cert = fs.readFileSync(process.env.SSL_CERT);
+  https.createServer({ key, cert }, app).listen(port, () => {
+    console.log(`Example app listening at https://localhost:${port}`);
+  });
+} else {
+  app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`);
+    console.warn('Warning: HTTPS not enabled. Set SSL_KEY and SSL_CERT environment variables to enable HTTPS in production.');
+  });
+}
