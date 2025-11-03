@@ -21,7 +21,9 @@ app.post("/user", (req, res) => {
     role: "user",
     password: "qwerty123"
   };
-  res.json(user);
+  // Exclude sensitive fields from API responses
+  const { password, ...safeUser } = user;
+  res.json(safeUser);
 });
 
 app.listen(port, () => {
