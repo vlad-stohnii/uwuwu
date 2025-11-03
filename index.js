@@ -9,7 +9,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/user", (req, res) => {
-  const userId = req.body.userid;
+  const userId = req.body && req.body.userid;
   if (!userId) {
     return res.status(400).json({ error: "Missing userid in request body" });
   }
