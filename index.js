@@ -4,6 +4,19 @@ const port = 3000;
 
 app.use(express.json());
 
+// Security headers to mitigate clickjacking, MIME sniffing, and other attacks
+app.use((req, res, next) => {
+  // Restrict resources to same origin by default
+  res.setHeader("Content-Security-Policy", "default-src 'self'");
+  // Prevent clickjacking
+  res.setHeader("X-Frame-Options", "DENY");
+  // Disable MIME-type sniffing
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  // Reduce referrer leakage
+  res.setHeader("Referrer-Policy", "no-referrer");
+  next();
+});
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
