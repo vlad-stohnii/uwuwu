@@ -1,5 +1,8 @@
 const express = require("express");
 const app = express();
+
+// Disable X-Powered-By header to avoid disclosing framework information
+app.disable('x-powered-by');
 const port = 3000;
 
 app.use(express.json());
