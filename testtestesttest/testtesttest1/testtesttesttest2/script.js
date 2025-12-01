@@ -4,14 +4,15 @@
 function displayUserInput() {
     var userInput = document.getElementById('userInput').value;
     // Directly inserting user input into the DOM without sanitization
-    document.getElementById('output').innerHTML = userInput;
+    // Safely set textContent to avoid interpreting HTML and prevent XSS
+    document.getElementById('output').textContent = userInput;
 }
 
 // 2. Insecure use of eval
 function executeUserScript() {
     var userScript = document.getElementById('userScript').value;
-    // Using eval to execute user-provided script
-    eval(userScript);
+    // Avoid eval: do not execute arbitrary user-provided code. If specific actions are needed, implement a safe command handler.
+    console.warn('executeUserScript() called, but executing arbitrary scripts is disabled for security.');
 }
 
 // 3. Unsecured AJAX request
